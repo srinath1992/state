@@ -1,0 +1,26 @@
+# Additional requirements for Tahoe-100M dataset processing
+# These extend the base State requirements for large-scale data processing
+
+# Core dependencies needed for system Python (not just uv tool environment)
+anndata>=0.10.0         # Single-cell data structures
+scanpy>=1.9.0           # Single-cell analysis toolkit  
+scipy>=1.10.0           # Scientific computing (for sparse matrices)
+h5py>=3.8.0             # HDF5 support for H5AD files
+
+# HuggingFace ecosystem (industry standard for large datasets)
+datasets>=3.0.0         # Efficient dataset streaming and caching
+transformers>=4.44.0     # Already in State, but ensuring version compatibility
+huggingface_hub>=0.16.0  # Model and dataset downloads with LFS support
+
+# High-performance data processing
+pandas>=2.0.0           # Data manipulation (essential for parquet)
+polars>=1.0.0           # Faster alternative to pandas for large datasets
+pyarrow>=16.0.0         # Columnar data processing (parquet backend)
+
+# Parallel processing and progress tracking  
+tqdm>=4.66.0            # Progress bars (already in State)
+multiprocess>=0.70.0    # Enhanced multiprocessing for data pipelines
+
+# Optional: Enhanced performance libraries
+# fastparquet>=2024.5.0   # Alternative parquet engine (if pyarrow issues)
+# dask>=2024.8.0          # Distributed computing (for >100GB datasets)

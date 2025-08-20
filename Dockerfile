@@ -39,6 +39,11 @@ WORKDIR /app
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv tool install arc-state
 
+# Install additional requirements for Tahoe-100M dataset processing
+COPY requirements-tahoe.txt /app/
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv pip install --system -r /app/requirements-tahoe.txt
+
 # Copy configuration files
 COPY examples/ /app/examples/
 

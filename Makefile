@@ -42,3 +42,33 @@ clean: ## Clean up Docker resources
 	@echo "$(BLUE)Cleaning up...$(NC)"
 	sudo docker system prune -f
 	@echo "$(GREEN)Cleanup completed$(NC)"
+
+# ================================
+# State Inference Testing (Using Pre-trained Models)
+# ================================
+
+test-inference: ## Test State inference using pre-trained ST-Tahoe model
+	@echo "$(BLUE)Testing State inference with ST-Tahoe model...$(NC)"
+	@echo "$(BLUE)Note: First run downloads ~3GB model (5-10 minutes)$(NC)"
+	sudo docker run --rm --gpus all \
+		-v $(PWD):/workspace \
+		--entrypoint bash $(DOCKER_IMAGE) -c \
+		"timeout 1800 python3 /workspace/scripts/test_state_inference.py --n-cells 500 || echo 'Download timeout - model too large'"
+	@echo "$(GREEN)Inference test completed!$(NC)"
+
+test-inference-small: ## Quick inference test with tiny dataset (for development)
+	@echo "$(BLUE)Quick inference test with 100 cells...$(NC)"
+	sudo docker run --rm --gpus all \
+		-v $(PWD):/workspace \
+		--entrypoint bash $(DOCKER_IMAGE) -c \
+		"python3 /workspace/scripts/test_state_inference.py --n-cells 100"
+	@echo "$(GREEN)Quick test completed!$(NC)"
+
+download-st-tahoe: ## Download ST-Tahoe model only (no inference test)
+	@echo "$(BLUE)Downloading ST-Tahoe model from HuggingFace...$(NC)"
+	mkdir -p models
+	sudo docker run --rm --gpus all \
+		-v $(PWD):/workspace \
+		--entrypoint bash $(DOCKER_IMAGE) -c \
+		"cd /workspace && git clone https://huggingface.co/arcinstitute/ST-Tahoe models/ST-Tahoe"
+	@echo "$(GREEN)ST-Tahoe model downloaded: models/ST-Tahoe$(NC)"
