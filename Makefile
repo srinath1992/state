@@ -66,9 +66,5 @@ test-inference-small: ## Quick inference test with tiny dataset (for development
 
 download-st-tahoe: ## Download ST-Tahoe model only (no inference test)
 	@echo "$(BLUE)Downloading ST-Tahoe model from HuggingFace...$(NC)"
-	mkdir -p models
-	sudo docker run --rm --gpus all \
-		-v $(PWD):/workspace \
-		--entrypoint bash $(DOCKER_IMAGE) -c \
-		"cd /workspace && git clone https://huggingface.co/arcinstitute/ST-Tahoe models/ST-Tahoe"
-	@echo "$(GREEN)ST-Tahoe model downloaded: models/ST-Tahoe$(NC)"
+	@bash download_model.sh
+	@echo "$(GREEN)Download complete!$(NC)"
