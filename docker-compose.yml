@@ -1,0 +1,35 @@
+# Simple Docker Compose for State - H100 optimized
+version: '3.8'
+
+services:
+  state:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BUILDKIT_INLINE_CACHE: 1
+        MAX_JOBS: 16  # Utilize all H100 system cores
+    
+    image: state:latest
+    
+    # GPU configuration for H100
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    
+    # Environment variables
+    environment:
+      - CUDA_VISIBLE_DEVICES=all
+      - PYTHONUNBUFFERED=1
+    
+    # Volume mounts
+    volumes:
+      - ./examples:/app/examples:ro
+      - ./data:/app/data:rw
+    
+    # Resource limits for H100 system
+    shm_size: 64g

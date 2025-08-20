@@ -1,0 +1,92 @@
+# Docker ignore file - optimize build context and security
+# Following industry best practices from leading AI labs
+
+# Git and version control
+.git
+.gitignore
+.gitmodules
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+logs/
+tmp/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Documentation and examples (exclude from production builds)
+docs/
+examples/*.h5ad
+
+# Test files
+tests/
+test_*
+*_test.py
+
+# CI/CD files
+.github/
+.circleci/
+.travis.yml
+
+# Container files
+Dockerfile*
+.dockerignore
+singularity.def
+*.sif
+
+# Environment and secrets
+.env
+.env.local
+.env.production
+secrets/
+*.key
+*.pem
+
+# Data files (should be mounted as volumes)
+data/
+datasets/
+outputs/
+checkpoints/
+models/
+
+# Jupyter notebooks
+*.ipynb
+.ipynb_checkpoints/
+
+# Coverage reports
+htmlcov/
+.coverage
+.pytest_cache/
